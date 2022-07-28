@@ -4,8 +4,53 @@ from .forms import TaskCreateForm
 from .models import Task
 
 # Create your views here.
+def task_index(request):
+    tasks = Task.objects.all() # returns whole list of data in dict
+    context = {
+        "title": "Task Create",
+        "body_title": "Task Create | TASK TRACKER",
+        "tasks": tasks
+    }
+    template = "tasks/index.html"
+    return render(request, template, context)
+
+def task_edit(request, id):
+    task = Task.objects.get(id=id)
+    context = {
+        "title": "Task Edit",
+        "body_title": "Task Edit | TASK TRACKER",
+        "task": task
+    }
+    template = "tasks/edit.html"
+    return render(request, template, context)
+
+def task_show(request, id):
+    task = Task.objects.get(id=id)
+    context = {
+        "title": "Task Edit",
+        "body_title": "Task Show | TASK SHOW",
+        "task": task
+    }
+    template = "tasks/show.html"
+
+    return render(request, template, context)
+
+def task_delete(request, id):
+    task = Task.objects.get(id=id)
+    task.delete() # delete data from table
+
+    tasks = Task.objects.all() # returns whole list of data in dict
+    context = {
+        "title": "Task Create",
+        "body_title": "Task Create | TASK TRACKER",
+        "tasks": tasks
+    }
+    template = "tasks/index.html"
+
+    return render(request, template, context)
+
 def task_create(request):
-    if request.method == "post":
+    if request.method == "POST":
         task = Task()
         task.task_title = request.POST.get('task_title')
         task.task_desc = request.POST.get('task_desc')
@@ -16,8 +61,14 @@ def task_create(request):
         task.task_end_date = request.POST.get('task_end_date')
         task.save()
 
+        tasks = Task.objects.all() # returns whole list of data in dict
+        context = {
+            "title": "Task Create",
+            "body_title": "Task Create | TASK TRACKER",
+            "tasks": tasks
+        }
         template = 'tasks/index.html'
-        return render(request, template)
+        return render(request, template, context)
     else:
         create_form = TaskCreateForm()
         template = "tasks/create.html"
