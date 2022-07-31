@@ -8,7 +8,7 @@ class Task(models.Model):
     task_category = models.CharField(max_length=100)
     task_assign_date = models.DateField(null=True, blank=True)
     task_end_date = models.DateField(null=True, blank=True)
-    task_assign_to = models.CharField(max_length=200)
+    task_assign_to = models.EmailField(default=None, unique=True)
     task_assigned_by = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=datetime.now())
     updated_at = models.DateTimeField(null=True, blank=True)
