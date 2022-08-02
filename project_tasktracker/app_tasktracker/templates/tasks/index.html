@@ -4,6 +4,12 @@
 {{ title }}
 {% endblock %}
 
+{% load static %}
+
+{% block link_css %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
     <h1>{{ body_title }}</h1>
@@ -43,4 +49,8 @@
         </table>
     </div>
 </div>
+{% endblock %}
+
+{% block custom_js %}
+<script src="{% static 'js/script.js' %}"></script>
 {% endblock %}
